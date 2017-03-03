@@ -124,7 +124,7 @@ update:
 .PHONY: install-tools-php
 install-tools-php:
 	@$(call HELPTEXT,$@)
-	curl -o bin/phpdoc http://www.phpdoc.org/phpDocumentor.phar && chmod 755 bin/phpdoc
+	curl -o bin/phpdoc https://www.phpdoc.org/phpDocumentor.phar && chmod 755 bin/phpdoc
 	composer install
 
 
