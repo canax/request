@@ -1,9 +1,13 @@
-#test:
-#    override:
-#        - make test
+machine:
+    php:
+        #version: 5.6.18
 
-notify:
-  webhooks:
-    # A list of hook hashes, containing the url field
-    # gitter hook
-    - url: https://webhooks.gitter.im/e/9cd07f66fa658500e267
+
+
+test:
+    pre:
+    - make install
+    - make check
+
+    override:
+    - make test
