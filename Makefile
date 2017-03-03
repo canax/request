@@ -134,7 +134,7 @@ install-tools-php:
 
 	curl -Lso bin/phpunit https://phar.phpunit.de/phpunit-5.7.9.phar && chmod 755 bin/phpunit
 
-	curl -Lso bin/phploc https://phar.phpunit.de/phploc.phar && chmod 755 bin/phploc
+	curl -Lo bin/phploc https://phar.phpunit.de/phploc.phar && chmod 755 bin/phploc
 	
 	composer install
 
