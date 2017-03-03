@@ -205,10 +205,10 @@ class RequestBasic
      */
     public function getCurrentUrl($queryString = true)
     {
-        $rs    = $this->getServer('REQUEST_SCHEME');
-        $https = $this->getServer('HTTPS') == 'on' ? true : false;
-        $sn    = $this->getServer('SERVER_NAME');
-        $port  = $this->getServer('SERVER_PORT');
+        $scheme = $this->getServer('REQUEST_SCHEME');
+        $https  = $this->getServer('HTTPS') == 'on' ? true : false;
+        $server = $this->getServer('SERVER_NAME');
+        $port   = $this->getServer('SERVER_PORT');
 
         $port  = ($port == '80')
             ? ''
@@ -216,16 +216,13 @@ class RequestBasic
                 ? ''
                 : ':' . $port);
 
-        if ($queryString) {
-            $ru = rtrim($this->getServer('REQUEST_URI'), '/');
-        } else {
-            $ru = rtrim(strtok($this->getServer('REQUEST_URI'), '?'), '/');
-        }
+        $uri = $queryString
+            ? rtrim($this->getServer('REQUEST_URI'), '/')
+            : rtrim(strtok($this->getServer('REQUEST_URI'), '?'), '/');
 
-        $url  = $rs ? $rs : 'http';
-        //$url .= $https ? 's' : '';
+        $url  = $scheme ? $scheme : 'http';
         $url .= '://';
-        $url .= $sn . $port . htmlspecialchars($ru);
+        $url .= $server . $port . htmlspecialchars($uri);
         
         return $url;
     }
@@ -312,8 +309,8 @@ class RequestBasic
     {
         if ($key) {
             return isset($this->post[$key]) ? $this->post[$key] : $default;
-        } else {
-            return $this->post;
         }
+
+        return $this->post;
     }
 }
