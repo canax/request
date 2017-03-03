@@ -125,6 +125,8 @@ update:
 install-tools-php:
 	@$(call HELPTEXT,$@)
 	wget -O bin/phpdoc https://www.phpdoc.org/phpDocumentor.phar && chmod 755 bin/phpdoc
+	composer require
+
 
 
 
