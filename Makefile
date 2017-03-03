@@ -31,12 +31,14 @@ HELPTEXT = $(ECHO) "$(ACTION)--->" `egrep "^\# target: $(1) " $(THIS_MAKEFILE) |
 # Add local bin path for test tools
 #PATH_ORIG = $(PATH)
 PATH := "./bin:./vendor/bin:./node_modules/.bin:$(PATH)"
+SHELL := env PATH=$(PATH) $(SHELL)
 
 
 
 # target: help               - Displays help.
 .PHONY:  help
 help:
+	echo $(SHELL)
 	@$(call HELPTEXT,$@)
 	@$(ECHO) "Usage:"
 	@$(ECHO) " make [target] ..."
