@@ -35,11 +35,12 @@ matrix:
 
 
 before_script:
-    #- make install
+    - make install
 
 
 script:
-    - make install check test
+    - make check
+    - make test
 
 
 
