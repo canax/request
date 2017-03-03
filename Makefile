@@ -67,7 +67,7 @@ clean:
 .PHONY:  clean-all
 clean-all:
 	@$(call HELPTEXT,$@)
-	rm -rf bin vendor composer.lock
+	rm -rf bin build vendor composer.lock
 
 
 
@@ -80,7 +80,7 @@ check: check-tools-php
 
 # target: test               - Run all tests.
 .PHONY:  test
-test: phpunit phpcs phpmd
+test: phpunit phpcs phpmd phploc
 	@$(call HELPTEXT,$@)
 
 
@@ -124,7 +124,18 @@ update:
 .PHONY: install-tools-php
 install-tools-php:
 	@$(call HELPTEXT,$@)
-	curl -o bin/phpdoc https://www.phpdoc.org/phpDocumentor.phar && chmod 755 bin/phpdoc
+	curl -Lso bin/phpdoc https://www.phpdoc.org/phpDocumentor.phar && chmod 755 bin/phpdoc
+
+	curl -Lso bin/phpcs https://squizlabs.github.io/PHP_CodeSniffer/phpcs.phar && chmod 755 bin/phpcs
+
+	curl -Lso bin/phpcbf https://squizlabs.github.io/PHP_CodeSniffer/phpcbf.phar && chmod 755 bin/phpcbf
+
+	curl -Lso bin/phpmd http://static.phpmd.org/php/latest/phpmd.phar && chmod 755 bin/phpmd
+
+	curl -Lso bin/phpunit https://phar.phpunit.de/phpunit-5.7.9.phar && chmod 755 bin/phpunit
+
+	curl -Lso bin/phploc https://phar.phpunit.de/phploc.phar && chmod 755 bin/phploc
+	
 	composer install
 
 
@@ -135,6 +146,7 @@ install-tools-php:
 check-tools-php:
 	@$(call HELPTEXT,$@)
 	which phpunit && phpunit --version
+	which phploc && phploc --version
 	which phpcs && phpcs --version && echo
 	which phpmd && phpmd --version && echo
 	which phpcbf && phpcbf --version && echo
@@ -171,6 +183,14 @@ phpcbf:
 phpmd: prepare
 	@$(call HELPTEXT,$@)
 	- phpmd . text .phpmd.xml | tee build/phpmd
+
+
+
+# target: phploc             - Code statistics for PHP.
+.PHONY: phploc
+phploc: prepare
+	@$(call HELPTEXT,$@)
+	phploc src > build/phploc
 
 
 
