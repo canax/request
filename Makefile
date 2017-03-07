@@ -29,16 +29,21 @@ THIS_MAKEFILE := $(call WHERE-AM-I)
 HELPTEXT = $(ECHO) "$(ACTION)--->" `egrep "^\# target: $(1) " $(THIS_MAKEFILE) | sed "s/\# target: $(1)[ ]*-[ ]* / /g"` "$(NO_COLOR)"
 
 # Add local bin path for test tools
-#PATH_ORIG = $(PATH)
-PATH := "./bin:./vendor/bin:./node_modules/.bin:$(PATH)"
-SHELL := env PATH=$(PATH) $(SHELL)
+#PATH := "./.bin:./vendor/bin:./node_modules/.bin:$(PATH)"
+#SHELL := env PATH=$(PATH) $(SHELL)
+PHPUNIT := .bin/phpunit
+PHPLOC 	:= .bin/phploc
+PHPCS   := .bin/phpcs
+PHPCBF  := .bin/phpcbf
+PHPMD   := .bin/phpmd
+PHPDOC  := .bin/phpdoc
+BEHAT   := .bin/behat
 
 
 
 # target: help               - Displays help.
 .PHONY:  help
 help:
-	echo $(SHELL)
 	@$(call HELPTEXT,$@)
 	@$(ECHO) "Usage:"
 	@$(ECHO) " make [target] ..."
@@ -51,7 +56,7 @@ help:
 .PHONY:  prepare
 prepare:
 	@$(call HELPTEXT,$@)
-	[ -d bin ] || mkdir bin
+	[ -d .bin ] || mkdir .bin
 	[ -d build ] || mkdir build
 	rm -rf build/*
 
@@ -69,7 +74,7 @@ clean:
 .PHONY:  clean-all
 clean-all:
 	@$(call HELPTEXT,$@)
-	rm -rf bin build vendor composer.lock
+	rm -rf .bin build vendor composer.lock
 
 
 
@@ -82,8 +87,9 @@ check: check-tools-php
 
 # target: test               - Run all tests.
 .PHONY:  test
-test: phpunit phpcs phpmd phploc
+test: phpunit phpcs phpmd phploc behat
 	@$(call HELPTEXT,$@)
+	composer validate
 
 
 
@@ -117,6 +123,13 @@ update:
 
 
 
+# target: tag-prepare        - Prepare to tag new version.
+.PHONY: tag-prepare
+tag-prepare:
+	@$(call HELPTEXT,$@)
+
+
+
 # ------------------------------------------------------------------------
 #
 # PHP
@@ -126,18 +139,20 @@ update:
 .PHONY: install-tools-php
 install-tools-php:
 	@$(call HELPTEXT,$@)
-	curl -Lso bin/phpdoc https://www.phpdoc.org/phpDocumentor.phar && chmod 755 bin/phpdoc
+	curl -Lso $(PHPDOC) https://www.phpdoc.org/phpDocumentor.phar && chmod 755 $(PHPDOC)
 
-	curl -Lso bin/phpcs https://squizlabs.github.io/PHP_CodeSniffer/phpcs.phar && chmod 755 bin/phpcs
+	curl -Lso $(PHPCS) https://squizlabs.github.io/PHP_CodeSniffer/phpcs.phar && chmod 755 $(PHPCS)
 
-	curl -Lso bin/phpcbf https://squizlabs.github.io/PHP_CodeSniffer/phpcbf.phar && chmod 755 bin/phpcbf
+	curl -Lso $(PHPCBF) https://squizlabs.github.io/PHP_CodeSniffer/phpcbf.phar && chmod 755 $(PHPCBF)
 
-	curl -Lso bin/phpmd http://static.phpmd.org/php/latest/phpmd.phar && chmod 755 bin/phpmd
+	curl -Lso $(PHPMD) http://static.phpmd.org/php/latest/phpmd.phar && chmod 755 $(PHPMD)
 
-	curl -Lso bin/phpunit https://phar.phpunit.de/phpunit-5.7.9.phar && chmod 755 bin/phpunit
+	curl -Lso $(PHPUNIT) https://phar.phpunit.de/phpunit-5.7.9.phar && chmod 755 $(PHPUNIT)
 
-	curl -Lo bin/phploc https://phar.phpunit.de/phploc.phar && chmod 755 bin/phploc
-	ls -l bin
+	curl -Lso $(PHPLOC) https://phar.phpunit.de/phploc.phar && chmod 755 $(PHPLOC)
+
+	curl -Lso $(BEHAT) https://github.com/Behat/Behat/releases/download/v3.3.0/behat.phar && chmod 755 $(BEHAT)
+
 	composer install
 
 
@@ -147,12 +162,13 @@ install-tools-php:
 .PHONY: check-tools-php
 check-tools-php:
 	@$(call HELPTEXT,$@)
-	which phpunit && phpunit --version
-	which phploc && phploc --version
-	which phpcs && phpcs --version && echo
-	which phpmd && phpmd --version && echo
-	which phpcbf && phpcbf --version && echo
-	which phpdoc && phpdoc --version && echo
+	which $(PHPUNIT) && $(PHPUNIT) --version
+	which $(PHPLOC) && $(PHPLOC) --version
+	which $(PHPCS) && $(PHPCS) --version && echo
+	which $(PHPMD) && $(PHPMD) --version && echo
+	which $(PHPCBF) && $(PHPCBF) --version && echo
+	which $(PHPDOC) && $(PHPDOC) --version && echo
+	which $(BEHAT) && $(BEHAT) --version && echo
 
 
 
@@ -160,7 +176,7 @@ check-tools-php:
 .PHONY: phpunit
 phpunit: prepare
 	@$(call HELPTEXT,$@)
-	phpunit --configuration .phpunit.xml
+	$(PHPUNIT) --configuration .phpunit.xml
 
 
 
@@ -168,7 +184,7 @@ phpunit: prepare
 .PHONY: phpcs
 phpcs: prepare
 	@$(call HELPTEXT,$@)
-	phpcs --standard=.phpcs.xml | tee build/phpcs
+	$(PHPCS) --standard=.phpcs.xml | tee build/phpcs
 
 
 
@@ -176,7 +192,7 @@ phpcs: prepare
 .PHONY: phpcbf
 phpcbf:
 	@$(call HELPTEXT,$@)
-	phpcbf --standard=.phpcs.xml
+	$(PHPCBF) --standard=.phpcs.xml
 
 
 
@@ -184,7 +200,7 @@ phpcbf:
 .PHONY: phpmd
 phpmd: prepare
 	@$(call HELPTEXT,$@)
-	- phpmd . text .phpmd.xml | tee build/phpmd
+	- $(PHPMD) . text .phpmd.xml | tee build/phpmd
 
 
 
@@ -192,7 +208,7 @@ phpmd: prepare
 .PHONY: phploc
 phploc: prepare
 	@$(call HELPTEXT,$@)
-	phploc src > build/phploc
+	$(PHPLOC) src > build/phploc
 
 
 
@@ -200,4 +216,12 @@ phploc: prepare
 .PHONY: phpdoc
 phpdoc:
 	@$(call HELPTEXT,$@)
-	phpdoc --config=.phpdoc.xml
+	$(PHPDOC) --config=.phpdoc.xml
+
+
+
+# target: behat              - Run behat for feature tests.
+.PHONY: behat
+behat:
+	@$(call HELPTEXT,$@)
+	[ ! -d features ] || $(BEHAT)
