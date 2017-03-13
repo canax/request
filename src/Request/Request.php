@@ -6,7 +6,7 @@ namespace Anax\Request;
  * Storing information from the request and calculating related essentials.
  *
  */
-class RequestBasic
+class Request
 {
     /**
     * Properties
@@ -143,6 +143,18 @@ class RequestBasic
     public function getRoute()
     {
         return $this->route;
+    }
+
+
+
+    /**
+     * Get the request method.
+     *
+     * @return string as the request method
+     */
+    public function getMethod()
+    {
+        return $this->getServer("REQUEST_METHOD");
     }
 
 

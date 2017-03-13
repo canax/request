@@ -6,7 +6,7 @@ namespace Anax\Request;
  * Storing information from the request and calculating related essentials.
  *
  */
-class RequestBasicTest extends \PHPUnit_Framework_TestCase
+class RequestTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * Properties
@@ -22,7 +22,7 @@ class RequestBasicTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $this->request = new \Anax\Request\RequestBasic();
+        $this->request = new Request();
         $this->request->setGlobals(
             [
                 'server' => [
@@ -298,5 +298,18 @@ class RequestBasicTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals($siteUrl, $this->request->getSiteUrl(), "Failed siteurl: " . $siteUrl);
         $this->assertEquals($baseUrl, $this->request->getBaseUrl(), "Failed baseurl: " . $baseUrl);
+
+        echo $this->request->getMethod();
+    }
+
+
+
+    /**
+     * Test
+     */
+    public function testRequestMethod()
+    {
+        $this->request->setServer("REQUEST_METHOD", "GET");
+        $this->assertEquals("GET", $this->request->getMethod());
     }
 }
