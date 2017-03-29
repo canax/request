@@ -221,8 +221,8 @@ class RequestTest extends \PHPUnit_Framework_TestCase
                 [
                     'REQUEST_SCHEME' => "http",
                     'HTTPS'       => null, //"on",
-                    'SERVER_NAME' => "",
-                    'HTTP_HOST'   => "dbwebb.se",
+                    'SERVER_NAME' => "dbwebb.se",
+                    'HTTP_HOST'   => "webdev.dbwebb.se",
                     'SERVER_PORT' => "80",
                     'REQUEST_URI' => "/",
                     'url'         => "http://dbwebb.se",
@@ -233,17 +233,17 @@ class RequestTest extends \PHPUnit_Framework_TestCase
                     'REQUEST_SCHEME' => "http",
                     'HTTPS'       => null, //"on",
                     'SERVER_NAME' => "",
-                    'HTTP_HOST'   => "dbwebb.se",
+                    'HTTP_HOST'   => "webdev.dbwebb.se",
                     'SERVER_PORT' => "80",
                     'REQUEST_URI' => "/img",
-                    'url'         => "http://dbwebb.se/img",
+                    'url'         => "http://webdev.dbwebb.se/img",
                 ]
             ],
             [
                 [
                     'REQUEST_SCHEME' => "http",
                     'HTTPS'       => null, //"on",
-                    'SERVER_NAME' => "",
+//                    'SERVER_NAME' => "",
                     'HTTP_HOST'   => "dbwebb.se",
                     'SERVER_PORT' => "80",
                     'REQUEST_URI' => "/img/",
@@ -311,12 +311,6 @@ class RequestTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetCurrentUrlNoServerName($server)
     {
-        /* $this->request->setServer('REQUEST_SCHEME', $server['REQUEST_SCHEME']); */
-        /* $this->request->setServer('HTTPS', $server['HTTPS']); */
-        /* $this->request->setServer('SERVER_NAME', $server['SERVER_NAME']); */
-        /* $this->request->setServer('SERVER_PORT', $server['SERVER_PORT']); */
-        /* $this->request->setServer('REQUEST_URI', $server['REQUEST_URI']); */
-
         $fakeGlobal = ['server' => $server];
 
         $this->request->setGlobals($fakeGlobal);

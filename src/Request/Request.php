@@ -220,8 +220,8 @@ class Request
         $scheme = $this->getServer('REQUEST_SCHEME');
         $https  = $this->getServer('HTTPS') == 'on' ? true : false;
         $port   = $this->getServer('SERVER_PORT');
-        $server = ! empty($this->getServer('SERVER_NAME'))
-            ? $this->getServer('SERVER_NAME')
+        $server = ! empty($server_name = $this->getServer('SERVER_NAME'))
+            ? $server_name
             : $this->getServer('HTTP_HOST');
 
         $port  = ($port == '80')
