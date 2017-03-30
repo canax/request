@@ -4,7 +4,6 @@ namespace Anax\Request;
 
 /**
  * Storing information from the request and calculating related essentials.
- *
  */
 class RequestTest extends \PHPUnit_Framework_TestCase
 {

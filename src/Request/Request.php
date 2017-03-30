@@ -9,31 +9,50 @@ namespace Anax\Request;
 class Request
 {
     /**
-    * Properties
-    *
-    */
-    private $requestUri; // Request URI from $_SERVER
-    private $scriptName; // Scriptname from $_SERVER, actual scriptname part
-    private $path;       // Scriptname from $_SERVER, path-part
-
-    private $route;      // The route
-    private $routeParts; // The route as an array
+     * @var string $requestUri Request URI from $_SERVER.
+     * @var string $scriptName Scriptname from $_SERVER, actual scriptname part.
+     * @var string $path       Scriptname from $_SERVER, path-part.
+     */
+    private $requestUri;
+    private $scriptName;
+    private $path;
 
 
-    private $currentUrl; // Current url
-    private $siteUrl;    // Url to this site, http://dbwebb.se
-    private $baseUrl;    // Url to root dir, siteUrl . /some/installation/directory/
 
-    private $server; // Mapped to $_SERVER
-    private $get;    // Mapped to $_GET
-    private $post;   // Mapped to $_POST
+    /**
+     * @var string $route      The route.
+     * @var array  $routeParts The route as an array.
+     */
+    private $route;
+    private $routeParts;
+
+
+
+    /**
+     * @var string $currentUrl Current url.
+     * @var string $siteUrl    Url to this site, http://dbwebb.se.
+     * @var string $baseUrl    Url to root dir,
+     *                         siteUrl . /some/installation/directory/.
+     */
+    private $currentUrl;
+    private $siteUrl;
+    private $baseUrl;
+
+
+
+    /**
+     * @var string $server Mapped to $_SERVER.
+     * @var string $get    Mapped to $_GET.
+     * @var string $post   Mapped to $_POST.
+     */
+    private $server;
+    private $get;
+    private $post;
 
 
 
     /**
      * Constructor.
-     *
-     *
      */
     public function __construct()
     {
@@ -51,9 +70,17 @@ class Request
      */
     public function setGlobals($globals = [])
     {
-        $this->server = isset($globals['server']) ? array_merge($_SERVER, $globals['server']) : $_SERVER;
-        $this->get    = isset($globals['get'])    ? array_merge($_GET, $globals['get'])       : $_GET;
-        $this->post   = isset($globals['post'])   ? array_merge($_POST, $globals['post'])     : $_POST;
+        $this->server = isset($globals["server"])
+            ? array_merge($_SERVER, $globals["server"])
+            : $_SERVER;
+
+        $this->get = isset($globals["get"])
+            ? array_merge($_GET, $globals["get"])
+            : $_GET;
+
+        $this->post = isset($globals["post"])
+            ? array_merge($_POST, $globals["post"])
+            : $_POST;
     }
 
 
@@ -65,9 +92,9 @@ class Request
      */
     public function init()
     {
-        $this->requestUri = $this->getServer('REQUEST_URI');
-        $scriptName = $this->getServer('SCRIPT_NAME');
-        $this->path = rtrim(dirname($scriptName), '/');
+        $this->requestUri = $this->getServer("REQUEST_URI");
+        $scriptName = $this->getServer("SCRIPT_NAME");
+        $this->path = rtrim(dirname($scriptName), "/");
         $this->scriptName = basename($scriptName);
 
         // The route and its parts
@@ -76,10 +103,10 @@ class Request
         // Prepare to create siteUrl and baseUrl by using currentUrl
         $this->currentUrl = $this->getCurrentUrl();
         $parts = parse_url($this->currentUrl);
-        $this->siteUrl = "{$parts['scheme']}://{$parts['host']}"
-            . (isset($parts['port'])
-                ? ":{$parts['port']}"
-                : '');
+        $this->siteUrl = "{$parts["scheme"]}://{$parts["host"]}"
+            . (isset($parts["port"])
+                ? ":{$parts["port"]}"
+                : "");
         $this->baseUrl = $this->siteUrl . $this->path;
 
         return $this;
@@ -126,7 +153,7 @@ class Request
     /**
      * Get route parts.
      *
-     * @return array
+     * @return array with route in its parts
      */
     public function getRouteParts()
     {
@@ -166,8 +193,8 @@ class Request
      */
     public function extractRoute()
     {
-        $requestUri = $this->getServer('REQUEST_URI');
-        $scriptName = $this->getServer('SCRIPT_NAME');
+        $requestUri = $this->getServer("REQUEST_URI");
+        $scriptName = $this->getServer("SCRIPT_NAME");
         $scriptPath = dirname($scriptName);
         $scriptFile = basename($scriptName);
 
@@ -180,7 +207,7 @@ class Request
         ) {
             $i++;
         }
-        $route = trim(substr($requestUri, $i), '/');
+        $route = trim(substr($requestUri, $i), "/");
 
         // Does the request start with script-name - remove it.
         $len1 = strlen($route);
@@ -193,15 +220,15 @@ class Request
         }
 
         // Remove the ?-part from the query when analysing controller/metod/arg1/arg2
-        $queryPos = strpos($route, '?');
+        $queryPos = strpos($route, "?");
         if ($queryPos !== false) {
             $route = substr($route, 0, $queryPos);
         }
 
-        $route = ($route === false) ? '' : $route;
+        $route = ($route === false) ? "" : $route;
 
         $this->route = $route;
-        $this->routeParts = explode('/', trim($route, '/'));
+        $this->routeParts = explode("/", trim($route, "/"));
 
         return $this->route;
     }
@@ -217,26 +244,28 @@ class Request
      */
     public function getCurrentUrl($queryString = true)
     {
-        $scheme = $this->getServer('REQUEST_SCHEME');
-        $https  = $this->getServer('HTTPS') == 'on' ? true : false;
-        $port   = $this->getServer('SERVER_PORT');
-        $server = ! empty($server_name = $this->getServer('SERVER_NAME'))
-            ? $server_name
-            : $this->getServer('HTTP_HOST');
+        $port  = $this->getServer("SERVER_PORT");
+        $https = $this->getServer("HTTPS") == "on" ? true : false;
 
-        $port  = ($port == '80')
-            ? ''
+        $scheme = $https
+            ? "https"
+            : $this->getServer("REQUEST_SCHEME", "http");
+
+        $server = $this->getServer("SERVER_NAME")
+            ?: $this->getServer("HTTP_HOST");
+
+        $port  = ($port === "80")
+            ? ""
             : (($port == 443 && $https)
-                ? ''
-                : ':' . $port);
+                ? ""
+                : ":" . $port);
 
         $uri = $queryString
-            ? rtrim($this->getServer('REQUEST_URI'), '/')
-            : rtrim(strtok($this->getServer('REQUEST_URI'), '?'), '/');
+            ? rtrim($this->getServer("REQUEST_URI"), "/")
+            : rtrim(strtok($this->getServer("REQUEST_URI"), "?"), "/");
 
-        $url  = $scheme ? $scheme : 'http';
-        $url .= '://';
-        $url .= $server . $port . htmlspecialchars($uri);
+        $url  = htmlspecialchars($scheme) . "://";
+        $url .= htmlspecialchars($server) . $port . htmlspecialchars($uri);
 
         return $url;
     }
@@ -264,7 +293,7 @@ class Request
      * @param mixed  $key   the key an the , or an key-value array
      * @param string $value the value of the key
      *
-     * @return $this
+     * @return self
      */
     public function setServer($key, $value = null)
     {
@@ -273,6 +302,7 @@ class Request
         } else {
             $this->server[$key] = $value;
         }
+        return $this;
     }
 
 
@@ -298,7 +328,7 @@ class Request
      * @param mixed  $key   the key an the , or an key-value array
      * @param string $value the value of the key
      *
-     * @return $this
+     * @return self
      */
     public function setGet($key, $value = null)
     {
@@ -307,6 +337,7 @@ class Request
         } else {
             $this->get[$key] = $value;
         }
+        return $this;
     }
 
 
