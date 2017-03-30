@@ -209,6 +209,119 @@ class RequestTest extends \PHPUnit_Framework_TestCase
     }
 
 
+    /**
+     * Provider for $_SERVER
+     *
+     * @return array
+     */
+    public function providerGetCurrentUrlNoServerName()
+    {
+        return [
+            [
+                [
+                    'REQUEST_SCHEME' => "http",
+                    'HTTPS'       => null, //"on",
+                    'SERVER_NAME' => "dbwebb.se",
+                    'HTTP_HOST'   => "webdev.dbwebb.se",
+                    'SERVER_PORT' => "80",
+                    'REQUEST_URI' => "/",
+                    'url'         => "http://dbwebb.se",
+                ]
+            ],
+            [
+                [
+                    'REQUEST_SCHEME' => "http",
+                    'HTTPS'       => null, //"on",
+                    'SERVER_NAME' => "",
+                    'HTTP_HOST'   => "webdev.dbwebb.se",
+                    'SERVER_PORT' => "80",
+                    'REQUEST_URI' => "/img",
+                    'url'         => "http://webdev.dbwebb.se/img",
+                ]
+            ],
+            [
+                [
+                    'REQUEST_SCHEME' => "http",
+                    'HTTPS'       => null, //"on",
+//                    'SERVER_NAME' => "",
+                    'HTTP_HOST'   => "dbwebb.se",
+                    'SERVER_PORT' => "80",
+                    'REQUEST_URI' => "/img/",
+                    'url'         => "http://dbwebb.se/img",
+                ]
+            ],
+            [
+                [
+                    'REQUEST_SCHEME' => "http",
+                    'HTTPS'       => null, //"on",
+                    'SERVER_NAME' => "",
+                    'HTTP_HOST'   => "dbwebb.se",
+                    'SERVER_PORT' => "80",
+                    'REQUEST_URI' => "/anax-mvc/webroot/app.php",
+                    'url'         => "http://dbwebb.se/anax-mvc/webroot/app.php",
+                ]
+            ],
+            [
+                [
+                    'REQUEST_SCHEME' => "http",
+                    'HTTPS'       => null, //"on",
+                    'SERVER_NAME' => "",
+                    'HTTP_HOST'   => "dbwebb.se",
+                    'SERVER_PORT' => "8080",
+                    'REQUEST_URI' => "/anax-mvc/webroot/app.php",
+                    'url'         => "http://dbwebb.se:8080/anax-mvc/webroot/app.php",
+                ]
+            ],
+            [
+                [
+                    'REQUEST_SCHEME' => "https",
+                    'HTTPS'       => "on", //"on",
+                    'SERVER_NAME' => "",
+                    'HTTP_HOST'   => "dbwebb.se",
+                    'SERVER_PORT' => "443",
+                    'REQUEST_URI' => "/anax-mvc/webroot/app.php",
+                    'url'         => "https://dbwebb.se/anax-mvc/webroot/app.php",
+                ]
+            ],
+            [
+                [
+                    'REQUEST_SCHEME' => "https",
+                    'HTTPS'       => "on", //"on",
+                    'SERVER_NAME' => "",
+                    'HTTP_HOST'   => "dbwebb.se",
+                    'SERVER_PORT' => "8080",
+                    'REQUEST_URI' => "/anax-mvc/webroot/app.php",
+                    'url'         => "https://dbwebb.se:8080/anax-mvc/webroot/app.php",
+                ]
+            ],
+        ];
+    }
+
+
+
+    /**
+     * Test
+     *
+     * @param string $server the $_SERVER part
+     *
+     * @return void
+     *
+     * @dataProvider providerGetCurrentUrlNoServerName
+     *
+     */
+    public function testGetCurrentUrlNoServerName($server)
+    {
+        $fakeGlobal = ['server' => $server];
+
+        $this->request->setGlobals($fakeGlobal);
+
+        $url = $fakeGlobal['server']['url'];
+
+        $res = $this->request->getCurrentUrl();
+
+        $this->assertEquals($url, $res, "Failed url: " . $url);
+    }
+
 
     /**
      * Provider for $_SERVER

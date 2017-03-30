@@ -219,8 +219,10 @@ class Request
     {
         $scheme = $this->getServer('REQUEST_SCHEME');
         $https  = $this->getServer('HTTPS') == 'on' ? true : false;
-        $server = $this->getServer('SERVER_NAME');
         $port   = $this->getServer('SERVER_PORT');
+        $server = ! empty($server_name = $this->getServer('SERVER_NAME'))
+            ? $server_name
+            : $this->getServer('HTTP_HOST');
 
         $port  = ($port == '80')
             ? ''
@@ -235,7 +237,7 @@ class Request
         $url  = $scheme ? $scheme : 'http';
         $url .= '://';
         $url .= $server . $port . htmlspecialchars($uri);
-        
+
         return $url;
     }
 
