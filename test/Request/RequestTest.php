@@ -160,6 +160,16 @@ class RequestTest extends \PHPUnit_Framework_TestCase
             ],
             [
                 [
+                    'REQUEST_SCHEME' => "http",
+                    'HTTPS'       => null, //"on",
+                    'SERVER_NAME' => "dbwebb.se",
+                    'SERVER_PORT' => "8080",
+                    'REQUEST_URI' => "/anax-mvc/webroot/%31.php",
+                    'url'         => "http://dbwebb.se:8080/anax-mvc/webroot/1.php",
+                ]
+            ],
+            [
+                [
                     'REQUEST_SCHEME' => "https",
                     'HTTPS'       => "on", //"on",
                     'SERVER_NAME' => "dbwebb.se",
