@@ -92,8 +92,8 @@ class Request
      */
     public function init()
     {
-        $this->requestUri = $this->getServer("REQUEST_URI");
-        $scriptName = $this->getServer("SCRIPT_NAME");
+        $this->requestUri = rawurldecode($this->getServer("REQUEST_URI"));
+        $scriptName = rawurldecode($this->getServer("SCRIPT_NAME"));
         $this->path = rtrim(dirname($scriptName), "/");
         $this->scriptName = basename($scriptName);
 
@@ -193,10 +193,9 @@ class Request
      */
     public function extractRoute()
     {
-        $requestUri = $this->getServer("REQUEST_URI");
-        $scriptName = $this->getServer("SCRIPT_NAME");
-        $scriptPath = dirname($scriptName);
-        $scriptFile = basename($scriptName);
+        $requestUri = $this->requestUri;
+        $scriptPath = $this->path;
+        $scriptFile = $this->scriptName;
 
         // Compare REQUEST_URI and SCRIPT_NAME as long they match,
         // leave the rest as current request.
@@ -260,12 +259,14 @@ class Request
                 ? ""
                 : ":" . $port);
 
+        $uri = rawurldecode($this->getServer("REQUEST_URI"));
         $uri = $queryString
-            ? rtrim($this->getServer("REQUEST_URI"), "/")
-            : rtrim(strtok($this->getServer("REQUEST_URI"), "?"), "/");
+            ? rtrim($uri, "/")
+            : rtrim(strtok($uri, "?"), "/");
 
         $url  = htmlspecialchars($scheme) . "://";
-        $url .= htmlspecialchars($server) . $port . htmlspecialchars($uri);
+        $url .= htmlspecialchars($server)
+            . $port . htmlspecialchars(rawurldecode($uri));
 
         return $url;
     }

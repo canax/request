@@ -85,7 +85,6 @@ class RequestTest extends \PHPUnit_Framework_TestCase
      * @return void
      *
      * @dataProvider providerRoute
-     *
      */
     public function testGetRoute($route)
     {
@@ -93,6 +92,8 @@ class RequestTest extends \PHPUnit_Framework_TestCase
         //$this->assertEmpty($uri, "REQUEST_URI is empty.");
 
         $this->request->setServer('REQUEST_URI', $uri . '/' . $route);
+        $this->request->init();
+
         $this->assertEquals($route, $this->request->extractRoute(), "Failed extractRoute: " . $route);
         $this->assertEquals($route, $this->request->getRoute(), "Failed getRoute: " . $route);
     }
