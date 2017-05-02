@@ -1,6 +1,19 @@
 Revision history
 =================================
 
+Notes for development v1.1.0*
+---------------------------------
+
+* Check organisation of tests.
+* OWASP testing.
+* Move globals to own class and include COOKIE and FILES.
+* Globals support getting by array.
+* Move getCurrentUrl to Uri or UriBuilder.
+* Move extractRoute to Uri/UriBuilder.
+* Move parts of init() to be supported by Uri/UriBuilder.
+* Check if support FIG on Uri interface.
+
+
 v1.0.5* (2017-04-04)
 ---------------------------------
 
