@@ -18,6 +18,7 @@ v1.0.5* (2017-04-04)
 ---------------------------------
 
 * Added testcase for rawurldecode.
+* Adding `getBody()` to retrieve the body of the HTTP request.
 
 
 v1.0.4 (2017-04-03)

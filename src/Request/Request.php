@@ -359,4 +359,16 @@ class Request
 
         return $this->post;
     }
+
+
+
+    /**
+     * Get the request body.
+     *
+     * @return mixed
+     */
+    public function getBody()
+    {
+        return file_get_contents("php://input");
+    }
 }
