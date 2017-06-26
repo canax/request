@@ -14,7 +14,7 @@ Notes for development v1.1.0*
 * Check if support FIG on Uri interface.
 
 
-v1.0.5* (2017-04-04)
+v1.0.5 (2017-06-26)
 ---------------------------------
 
 * Added testcase for rawurldecode.
