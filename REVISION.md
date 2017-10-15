@@ -14,6 +14,12 @@ Notes for development v1.1.0*
 * Check if support FIG on Uri interface.
 
 
+v1.0.6 (2017-10-15)
+---------------------------------
+
+* Add setBody to ease unit testing.
+
+
 v1.0.5 (2017-06-26)
 ---------------------------------
 

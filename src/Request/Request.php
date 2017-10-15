@@ -44,10 +44,12 @@ class Request
      * @var string $server Mapped to $_SERVER.
      * @var string $get    Mapped to $_GET.
      * @var string $post   Mapped to $_POST.
+     * @var string $body   Mapped to request body, defaults to php://input.
      */
     private $server;
     private $get;
     private $post;
+    private $body;
 
 
 
@@ -363,12 +365,26 @@ class Request
 
 
     /**
+     * Set the request body (useful for unit testing).
+     *
+     * @return self
+     */
+    public function setBody($body)
+    {
+        $this->body = $body;
+    }
+
+
+
+    /**
      * Get the request body.
      *
      * @return mixed
      */
     public function getBody()
     {
-        return file_get_contents("php://input");
+        return isset($this->body)
+            ? $this->body
+            : file_get_contents("php://input");
     }
 }
