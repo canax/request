@@ -14,6 +14,14 @@ Notes for development v1.1.0*
 * Check if support FIG on Uri interface.
 
 
+
+v1.0.* (2018-04-22)
+---------------------------------
+
+* Enhance dockblock comments.
+* Make pass scrutinizer by installing phpunit.
+
+
 v1.0.6 (2017-10-15)
 ---------------------------------
 
