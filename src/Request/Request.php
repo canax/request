@@ -117,7 +117,7 @@ class Request
 
 
     /**
-     * Get site url.
+     * Get site url including scheme, host and port.
      *
      * @return string
      */
@@ -129,7 +129,7 @@ class Request
 
 
     /**
-     * Get base url.
+     * Get base url including site url and route path.
      *
      * @return string
      */
@@ -141,7 +141,7 @@ class Request
 
 
     /**
-     * Get script name.
+     * Get script name, index.php or other.
      *
      * @return string
      */
@@ -153,7 +153,7 @@ class Request
 
 
     /**
-     * Get route parts.
+     * Get route path parts in an array.
      *
      * @return array with route in its parts
      */
@@ -165,7 +165,7 @@ class Request
 
 
     /**
-     * Get the route.
+     * Get route path as a string.
      *
      * @return string as the current extracted route
      */
@@ -190,6 +190,8 @@ class Request
 
     /**
      * Extract the part containing the route.
+     *
+     * @todo Should be private, or useful in test?
      *
      * @return string as the current extracted route
      */
