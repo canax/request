@@ -2,10 +2,12 @@
 
 namespace Anax\Request;
 
+use \PHPUnit\Framework\TestCase;
+
 /**
  * Storing information from the request and calculating related essentials.
  */
-class RequestTest extends \PHPUnit_Framework_TestCase
+class RequestTest extends TestCase
 {
     /**
      * Properties

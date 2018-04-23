@@ -25,6 +25,8 @@ v1.1.0 (2018-04-23)
 * Upgrade CircleCI to v2.
 * Upgrade composer.json to >= php 7.0.
 * Add Codeclimate badge.
+* Dockerize repo.
+* Upgrade phpunit testcase to PHP >= 7.0.
 
 
 
