@@ -21,6 +21,11 @@ v1.1.0 (2018-04-23)
 * Enhance dockblock comments.
 * Make pass scrutinizer by installing phpunit.
 * Update travis to pass >= php 7.0.
+* Remove composer.lock.
+* Upgrade CircleCI to v2.
+* Upgrade composer.json to >= php 7.0.
+* Add Codeclimate badge.
+
 
 
 v1.0.6 (2017-10-15)
