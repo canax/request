@@ -11,6 +11,7 @@ Anax Request
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/canax/request/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/canax/request/?branch=master)
 [![Code Coverage](https://scrutinizer-ci.com/g/canax/request/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/canax/request/?branch=master)
 
+[![Maintainability](https://api.codeclimate.com/v1/badges/a370febad556e9b8c6a7/maintainability)](https://codeclimate.com/github/canax/request/maintainability)
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/4f795dfa-05de-495b-b40a-32b5728c6143/mini.png)](https://insight.sensiolabs.com/projects/4f795dfa-05de-495b-b40a-32b5728c6143)
 
 Anax Request module for wrapping all request related information.
