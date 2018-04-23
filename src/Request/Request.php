@@ -129,7 +129,7 @@ class Request
 
 
     /**
-     * Get base url including site url and route path.
+     * Get base url including site url and path to current index.php.
      *
      * @return string
      */

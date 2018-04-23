@@ -24,10 +24,10 @@ The module provides a framework unified way to access these global variables and
 Table of content
 ------------------
 
-* [Class, interface, trait](#Class-interface-trait)
-* [Configuration file](#Configuration-file)
-* [DI service](#DI-service)
-* [Access as framework service](#Access-as-framework-service)
+* [Class, interface, trait](#class-interface-trait)
+* [Configuration file](#configuration-file)
+* [DI service](#di-service)
+* [Access as framework service](#access-as-framework-service)
 
 
 
@@ -116,29 +116,106 @@ Extract url and route parts
 When the object is initiated you can extract url and route parts from it. This is based on the current url.
 
 ```php
-// Get site url including scheme, host and port.
+# Get site url including scheme, host and port.
 $request->getSiteUrl();
 
-// Get base url including site url and route path.
+# Get base url including site url and path to current index.php.
 $request->getBaseUrl();
 
-// Get current url as base url and attach
-// the query string.
+# Get current url as base url and attach
+# the query string.
 $request->getCurrentUrl();
 
-// Get script name, index.php or other.
+# Get script name, index.php or other.
 $request->getScriptName();
 
-// Get HTTP request method, for example
-// GET, POST, PUT, DELETE.
+# Get HTTP request method, for example
+# GET, POST, PUT, DELETE.
 $request->getMethod();
 
-// Get route path as a string.
+# Get route path as a string.
 $request->getRoute();
 
-// Get route path parts in an array.
+# Get route path parts in an array.
 $request->getRouteParts();
 ```
+
+
+
+Get and set `$_SERVER`
+------------------
+
+You can get and set values in the PHP global variable `$_SERVER`.
+
+```php
+# Read a value
+$request->getServer($key);
+
+# Read a value and use $default if $key is not set.
+$request->getServer($key, $default);
+
+# Set a value
+$request->setServer($key, $value);
+```
+
+You are reading and setting values in a copy of `$_SERVER`, so you are not actually editing the global variable, just the internal representation within the class.
+
+
+
+Get and set `$_GET`
+------------------
+
+You can get and set values in the PHP global variable `$_GET`.
+
+```php
+# Read a value
+$request->getGet($key);
+
+# Read a value and use $default if $key is not set.
+$request->getGet($key, $default);
+
+# Set a value
+$request->setGet($key, $value);
+```
+
+You are reading and setting values in a copy of `$_GET`, so you are not actually editing the global variable, just the internal representation within the class.
+
+
+
+Get and set `$_POST`
+------------------
+
+You can get and set values in the PHP global variable `$_POST`.
+
+```php
+# Read a value
+$request->getPost($key);
+
+# Read a value and use $default if $key is not set.
+$request->getPost($key, $default);
+
+# Set a value
+$request->setPost($key, $value);
+```
+
+You are reading and setting values in a copy of `$_POST`, so you are not actually editing the global variable, just the internal representation within the class.
+
+
+
+Get and set request body
+------------------
+
+You can get and set the value in the HTTP request body. Sometimes the HTTP request body is used to send parameters to an route.
+
+```php
+# Read the body
+$request->getBody();
+
+# Set the body
+$request->setBody($content);
+```
+
+You are setting values in a copy of the actual body, so you are not actually editing it, just the internal representation within the class.
 
 
 
