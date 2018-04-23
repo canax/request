@@ -15,17 +15,19 @@ Notes for development v1.1.0*
 
 
 
-v1.0.* (2018-04-22)
+v1.1.0 (2018-04-23)
 ---------------------------------
 
 * Enhance dockblock comments.
 * Make pass scrutinizer by installing phpunit.
+* Update travis to pass >= php 7.0.
 
 
 v1.0.6 (2017-10-15)
 ---------------------------------
 
 * Add setBody to ease unit testing.
+
 
 
 v1.0.5 (2017-06-26)
@@ -35,10 +37,12 @@ v1.0.5 (2017-06-26)
 * Adding `getBody()` to retrieve the body of the HTTP request.
 
 
+
 v1.0.4 (2017-04-03)
 ---------------------------------
 
 * Decode incoming url to fix encoded %-characters.
+
 
 
 v1.0.3 (2017-03-30)
@@ -49,6 +53,7 @@ v1.0.3 (2017-03-30)
 * Adding Sensiolabs badge.
 
 
+
 v1.0.2 (2017-03-13)
 ---------------------------------
 
@@ -56,10 +61,12 @@ v1.0.2 (2017-03-13)
 * Change name of request class, removed basic.
 
 
+
 v1.0.1 (2017-03-07)
 ---------------------------------
 
 * Cleanup makefile.
+
 
 
 v1.0.0 (2017-03-03)
