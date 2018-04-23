@@ -15,7 +15,7 @@ Anax Request
 
 Anax Request module for wrapping all request related information.
 
-The module essentially wraps access to `$_GET, $_POST, $_SERVER`, information send through the HTTP BODY and calculates url details (current, site, base, route path) from the request uri.
+The module essentially wraps access to `$_GET, $_POST, $_SERVER`, information send through the HTTP body and calculates url details (current, site, base, route path) from the request uri.
 
 The module provides a framework unified way to access these global variables and it provides a way to inject a certain setup when using the module for unit testing.
 
@@ -28,6 +28,12 @@ Table of content
 * [Configuration file](#configuration-file)
 * [DI service](#di-service)
 * [Access as framework service](#access-as-framework-service)
+* [Create and init an object](#create-and-init-an-object)
+* [Extract url and route parts](#extract-url-and-route-parts)
+* [Get and set `$_SERVER`](#get-and-set-_server)
+* [Get and set `$_GET`](#get-and-set-_get)
+* [Get and set `$_POST`](#get-and-set-_post)
+* [Get and set request body](#get-and-set-request-body)
 
 
 
