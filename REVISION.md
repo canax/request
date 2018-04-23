@@ -19,6 +19,7 @@ v1.1.* (2018-04-23)
 ---------------------------------
 
 * Added Codacy badge.
+* Adding service in config/di/request.php.
 
 
 

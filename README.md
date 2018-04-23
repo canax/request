@@ -27,6 +27,7 @@ Table of content
 ------------------
 
 * [Class, interface, trait](#class-interface-trait)
+* [Exceptions](#exceptions)
 * [Configuration file](#configuration-file)
 * [DI service](#di-service)
 * [Access as framework service](#access-as-framework-service)
@@ -50,6 +51,13 @@ The following classes, interfaces and traits exists.
 
 
 
+Exceptions
+------------------
+
+There are no module specific exceptions.
+
+
+
 Configuration file
 ------------------
 
@@ -63,14 +71,23 @@ DI service
 The session is created as a framework service within `$di`. The following is a sample on how the session service is created.
 
 ```php
-"request" => [
-    "shared" => true,
-    "callback" => function () {
-        $request = new \Anax\Request\Request();
-        $request->init();
-        return $request;
-    }
-],
+<?php
+/**
+ * Configuration file for database service.
+ */
+return [
+    // Services to add to the container.
+    "services" => [
+        "request" => [
+            "shared" => true,
+            "callback" => function () {
+                $request = new \Anax\Request\Request();
+                $request->init();
+                return $request;
+            }
+        ],
+    ],
+];
 ```
 
 1. The object is created.
