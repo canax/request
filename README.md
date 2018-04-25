@@ -68,12 +68,12 @@ There is no configuration file for this module.
 DI service
 ------------------
 
-The session is created as a framework service within `$di`. The following is a sample on how the session service is created.
+The session is created as a framework service within `$di`. The following is a sample on how the session service is created through `config/di/request.php`.
 
 ```php
 <?php
 /**
- * Configuration file for database service.
+ * Configuration file for request service.
  */
 return [
     // Services to add to the container.
@@ -81,9 +81,9 @@ return [
         "request" => [
             "shared" => true,
             "callback" => function () {
-                $request = new \Anax\Request\Request();
-                $request->init();
-                return $request;
+                $obj = new \Anax\Request\Request();
+                $obj->init();
+                return $obj;
             }
         ],
     ],

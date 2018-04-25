@@ -1,6 +1,6 @@
 <?php
 /**
- * Configuration file for database service.
+ * Configuration file for request service.
  */
 return [
     // Services to add to the container.
@@ -8,9 +8,9 @@ return [
         "request" => [
             "shared" => true,
             "callback" => function () {
-                $request = new \Anax\Request\Request();
-                $request->init();
-                return $request;
+                $obj = new \Anax\Request\Request();
+                $obj->init();
+                return $obj;
             }
         ],
     ],
