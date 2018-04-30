@@ -13,6 +13,21 @@ Notes for development v1.1.0*
 * Move parts of init() to be supported by Uri/UriBuilder.
 * Check if support FIG on Uri interface.
 
+* Add support for array retrival from globals
+
+```php
+function getPost($key, $default = null)
+{
+    if (is_array($key)) {
+        $key = array_flip($key);
+        return array_replace($key, array_intersect_key($_POST, $key));
+    }
+
+    return isset($_POST[$key])
+        ? $_POST[$key]
+        : $default;
+}
+```
 
 
 v1.1.1 (2018-04-25)
