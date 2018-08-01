@@ -144,6 +144,14 @@ install: prepare install-tools-php install-tools-bash
 
 
 
+# target: install-lowest          - Install lowest version of deoendencies
+.PHONY:  install-lowest
+install-lowest:
+	@$(call HELPTEXT,$@)
+	composer update --no-dev --prefer-lowest
+
+
+
 # target: update                  - Update the codebase and tools.
 .PHONY:  update
 update:
@@ -285,7 +293,7 @@ check-tools-php:
 .PHONY: phpunit
 phpunit: prepare
 	@$(call HELPTEXT,$@)
-	[ ! -d "test" ] || $(PHPUNIT) --configuration .phpunit.xml
+	[ ! -d "test" ] || $(PHPUNIT) --configuration .phpunit.xml $(options)
 
 
 
@@ -313,7 +321,7 @@ endif
 .PHONY: phpmd
 phpmd: prepare
 	@$(call HELPTEXT,$@)
-	- [ ! -f .phpmd.xml ] || $(PHPMD) . text .phpmd.xml | tee build/phpmd
+	- [ ! -f .phpmd.xml ] || [ ! -d src ] || $(PHPMD) . text .phpmd.xml | tee build/phpmd
 
 
 
@@ -321,7 +329,7 @@ phpmd: prepare
 .PHONY: phploc
 phploc: prepare
 	@$(call HELPTEXT,$@)
-	$(PHPLOC) src > build/phploc
+	[ ! -d src ] || $(PHPLOC) src > build/phploc
 
 
 

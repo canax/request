@@ -1,6 +1,7 @@
 Revision history
 =================================
 
+
 Notes for development v1.1.0*
 ---------------------------------
 
@@ -28,6 +29,18 @@ function getPost($key, $default = null)
         : $default;
 }
 ```
+
+
+v2.0.0-alpha.1 (2018-08-01)
+---------------------------------
+
+* Prepare to clean up waist and aline with release of Anax Lite v1.0.
+* Fix year in LICENSE.txt.
+* Ignore composer.lock.
+* Update Makefile.
+* Update to require PHP 7.2 in composer.json.
+* Fix phpunit.
+
 
 
 v1.1.1 (2018-04-25)

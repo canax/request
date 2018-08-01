@@ -247,7 +247,7 @@ You are setting values in a copy of the actual body, so you are not actually edi
 License
 ------------------
 
-This software carries a MIT license.
+This software carries a MIT license. See [LICENSE.txt](LICENSE.txt) for details.
 
 
 
