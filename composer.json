@@ -1,16 +1,14 @@
 {
     "name": "anax/request",    
     "type": "library",
-    "description": "Anax Request class.",
+    "description": "Anax Request module, details on the request.",
     "keywords": ["boilerplate", "framework", "mvc", "micro", "education"],
     "homepage": "https://dbwebb.se/anax",
     "license": "MIT",
     "authors": [
         {
             "name": "Mikael Roos",
-            "email": "mos@dbwebb.se",
-            "homepage": "https://dbwebb.se",
-            "role": "Developer"
+            "email": "mos@dbwebb.se"
         }
     ],
     "support": {
@@ -22,6 +20,9 @@
         }
     },
     "require": {
-        "php": ">=7.2"
+        "php": "^7.2"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^7"
     }
 }
