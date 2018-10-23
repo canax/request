@@ -313,6 +313,20 @@ class Request
 
 
     /**
+     * Check if the value from the _GET array exists.
+     *
+     * @param string $key     to check if it exists in the $_GET variable
+     *
+     * @return boolean
+     */
+    public function hasGet($key)
+    {
+        return array_key_exists($key, $this->get);
+    }
+
+
+
+    /**
      * Get a value from the _GET array and use default if it is not set.
      *
      * @param string $key     to check if it exists in the $_GET variable

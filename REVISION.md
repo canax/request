@@ -31,6 +31,13 @@ function getPost($key, $default = null)
 ```
 
 
+v2.0.0-beta.2 (2018-10-23)
+---------------------------------
+
+* Add method hasGet() to check if key exists in GET.
+
+
+
 v2.0.0-beta.1 (2018-08-15)
 ---------------------------------
 
