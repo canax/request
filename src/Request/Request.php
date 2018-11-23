@@ -403,4 +403,23 @@ class Request
             ? $this->body
             : file_get_contents("php://input");
     }
+
+
+
+    /**
+     * Get the request body from the HTTP request and treat it as
+     * JSON data.
+     *
+     * @throws Anax\Request\Exception when request body is invalid JSON.
+     *
+     * @return mixed as the JSON converted content.
+     */
+    public function getBodyAsJson()
+    {
+        $entry = json_decode($this->getBody(), true);
+        if (is_null($entry)) {
+            throw new Exception("Could not read HTTP request body as JSON.");
+        }
+        return $entry;
+    }
 }

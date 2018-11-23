@@ -31,6 +31,13 @@ function getPost($key, $default = null)
 ```
 
 
+v2.0.0-beta.3 (2018-11-23)
+---------------------------------
+
+* Add method getBodyAsJson() to get the request body as JSON data.
+
+
+
 v2.0.0-beta.2 (2018-10-23)
 ---------------------------------
 
