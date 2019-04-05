@@ -13,7 +13,6 @@ Anax Request
 
 [![Maintainability](https://api.codeclimate.com/v1/badges/4169870ccc4f905a04a1/maintainability)](https://codeclimate.com/github/canax/request/maintainability)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/49879ea97e494c019e5d17b8f5d7e610)](https://www.codacy.com/app/mosbth/request?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=canax/request&amp;utm_campaign=Badge_Grade)
-[![SensioLabsInsight](https://insight.sensiolabs.com/projects/4f795dfa-05de-495b-b40a-32b5728c6143/mini.png)](https://insight.sensiolabs.com/projects/4f795dfa-05de-495b-b40a-32b5728c6143)
 
 Anax Request module for wrapping all request related information.
 
@@ -68,10 +67,11 @@ There is no configuration file for this module.
 DI service
 ------------------
 
-The session is created as a framework service within `$di`. The following is a sample on how the session service is created through `config/di/request.php`.
+The module is created as a framework service within `$di`. You can see the details in the configuration file [`config/di/request.php`](config/di/request.php).
+
+It can look like this.
 
 ```php
-<?php
 /**
  * Configuration file for request service.
  */
@@ -90,10 +90,31 @@ return [
 ];
 ```
 
-1. The object is created.
+1. The object is created as a shared resource.
 1. The init-method reads information from the environment to find out the url of the request.
 
 The service is lazy loaded and not created until it is used.
+
+
+
+General usage within the Anax framework
+------------------
+
+The request service is a mandatory service within the Anax framework and it is the first service used when handling a request.
+
+Here is the general flow for receiving a request, mapping it to a route and returning a response. This is found in the frontcontroller `htdocs/index.php` of an Anax installation.
+
+```php
+// Leave to router to match incoming request to routes
+$response = $di->get("router")->handle(
+    $di->get("request")->getRoute(),
+    $di->get("request")->getMethod()
+);
+// Send the HTTP response with headers and body
+$di->get("response")->send($response);
+```
+
+The request is used to get the request method and the route path, these are used by the router service to find a callback for the route. Each callback can then return a response which is sent through the response service.
 
 
 
@@ -253,5 +274,5 @@ This software carries a MIT license. See [LICENSE.txt](LICENSE.txt) for details.
 
 ```
  .  
-..:  Copyright (c) 2013 - 2018 Mikael Roos, mos@dbwebb.se
+..:  Copyright (c) 2013 - 2019 Mikael Roos, mos@dbwebb.se
 ```

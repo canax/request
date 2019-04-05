@@ -31,6 +31,15 @@ function getPost($key, $default = null)
 ```
 
 
+
+v2.0.0 (2019-04-05)
+---------------------------------
+
+* Update README.
+* Execute tests on PHP 7.3.
+
+
+
 v2.0.0-beta.3 (2018-11-23)
 ---------------------------------
 
