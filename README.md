@@ -54,7 +54,7 @@ The following classes, interfaces and traits exists.
 Exceptions
 ------------------
 
-There are no module specific exceptions.
+Module specific exceptions are thrown through `Anax\Request\Exception`.
 
 
 
