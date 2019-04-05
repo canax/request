@@ -1,6 +1,15 @@
 version: "3"
 services:
-    php72: &latest
+    php73: &latest
+        image: anax/dev:php73
+        volumes: [ ".:/home/anax/repo" ]
+
+    php73-apache:
+        image: anax/dev:php73-apache
+        ports: [ "10073:80" ]
+        volumes: [ ".:/home/anax/repo" ]
+
+    php72:
         image: anax/dev:php72
         volumes: [ ".:/home/anax/repo" ]
 
