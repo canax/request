@@ -32,6 +32,13 @@ function getPost($key, $default = null)
 
 
 
+v2.0.1 (2019-04-05)
+---------------------------------
+
+* Update configuration for scrutinizer.
+
+
+
 v2.0.0 (2019-04-05)
 ---------------------------------
 

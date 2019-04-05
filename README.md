@@ -29,6 +29,7 @@ Table of content
 * [Exceptions](#exceptions)
 * [Configuration file](#configuration-file)
 * [DI service](#di-service)
+* [General usage within the Anax framework](#general-usage-within-the-Anax-framework)
 * [Access as framework service](#access-as-framework-service)
 * [Create and init an object](#create-and-init-an-object)
 * [Extract url and route parts](#extract-url-and-route-parts)
