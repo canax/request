@@ -41,10 +41,10 @@ class Request
 
 
     /**
-     * @var string $server Mapped to $_SERVER.
-     * @var string $get    Mapped to $_GET.
-     * @var string $post   Mapped to $_POST.
-     * @var string $body   Mapped to request body, defaults to php://input.
+     * @var array $server Mapped to $_SERVER.
+     * @var array $get    Mapped to $_GET.
+     * @var array $post   Mapped to $_POST.
+     * @var array $body   Mapped to request body, defaults to php://input.
      */
     private $server;
     private $get;
@@ -72,6 +72,10 @@ class Request
      */
     public function setGlobals($globals = [])
     {
+        $this->server = [];
+        $this->get = [];
+        $this->post = [];
+
         $this->server = isset($globals["server"])
             ? array_merge($_SERVER, $globals["server"])
             : $_SERVER;
@@ -83,6 +87,22 @@ class Request
         $this->post = isset($globals["post"])
             ? array_merge($_POST, $globals["post"])
             : $_POST;
+    }
+
+
+
+    /**
+     * Read info from the globals.
+     *
+     * @param array $globals use to initiate globals with values.
+     *
+     * @return void
+     */
+    public function unsetGlobals()
+    {
+        $this->server = [];
+        $this->get = [];
+        $this->post = [];
     }
 
 
@@ -280,14 +300,19 @@ class Request
     /**
      * Get a value from the _SERVER array and use default if it is not set.
      *
-     * @param string $key     to check if it exists in the $_SERVER variable
-     * @param string $default value to return as default
+     * @param string $key     to check if it exists in the $_SERVER variable,
+     *                        or empty to get whole array.
+     * @param mixed  $default value to return as default
      *
      * @return mixed
      */
-    public function getServer($key, $default = null)
+    public function getServer($key = null, $default = null)
     {
-        return isset($this->server[$key]) ? $this->server[$key] : $default;
+        if ($key) {
+            return $this->server[$key] ?? $default;
+        }
+
+        return $this->server;
     }
 
 
@@ -300,7 +325,7 @@ class Request
      *
      * @return self
      */
-    public function setServer($key, $value = null)
+    public function setServer($key, $value = null) : object
     {
         if (is_array($key)) {
             $this->server = array_merge($this->server, $key);
@@ -329,14 +354,19 @@ class Request
     /**
      * Get a value from the _GET array and use default if it is not set.
      *
-     * @param string $key     to check if it exists in the $_GET variable
-     * @param string $default value to return as default
+     * @param string $key     to check if it exists in the $_GET variable,
+     *                        or empty to get whole array.
+     * @param mixed  $default value to return as default
      *
      * @return mixed
      */
-    public function getGet($key, $default = null)
+    public function getGet($key = null, $default = null)
     {
-        return isset($this->get[$key]) ? $this->get[$key] : $default;
+        if ($key) {
+            return $this->get[$key] ?? $default;
+        }
+
+        return $this->get;
     }
 
 
@@ -344,12 +374,12 @@ class Request
     /**
      * Set variable in the get array.
      *
-     * @param mixed  $key   the key an the , or an key-value array
+     * @param mixed  $key   the key an the value, or an key-value array
      * @param string $value the value of the key
      *
      * @return self
      */
-    public function setGet($key, $value = null)
+    public function setGet($key, $value = null) : object
     {
         if (is_array($key)) {
             $this->get = array_merge($this->get, $key);
@@ -364,18 +394,39 @@ class Request
     /**
      * Get a value from the _POST array and use default if it is not set.
      *
-     * @param string $key     to check if it exists in the $_POST variable
-     * @param string $default value to return as default
+     * @param string $key     to check if it exists in the $_POST variable,
+     *                        or empty to get whole array.
+     * @param mixed  $default value to return as default
      *
      * @return mixed
      */
     public function getPost($key = null, $default = null)
     {
         if ($key) {
-            return isset($this->post[$key]) ? $this->post[$key] : $default;
+            return $this->post[$key] ?? $default;
         }
 
         return $this->post;
+    }
+
+
+
+    /**
+     * Set variable in the post array.
+     *
+     * @param mixed  $key   the key an the value, or an key-value array
+     * @param string $value the value of the key
+     *
+     * @return self
+     */
+    public function setPost($key, $value = null) : object
+    {
+        if (is_array($key)) {
+            $this->post = array_merge($this->post, $key);
+        } else {
+            $this->post[$key] = $value;
+        }
+        return $this;
     }
 
 
