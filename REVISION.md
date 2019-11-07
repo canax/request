@@ -32,6 +32,17 @@ function getPost($key, $default = null)
 
 
 
+v2.0.2 (2019-11-07)
+---------------------------------
+
+* Fix Makefile for phpmd download.
+* Add setPost().
+* Upgrade to phpunit 8.
+* Add unittests.
+* Make getServer and getPost to support returning whole array of SERVER/POST.
+
+
+
 v2.0.1 (2019-04-05)
 ---------------------------------
 
