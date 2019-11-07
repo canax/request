@@ -2,7 +2,7 @@
 
 namespace Anax\Request;
 
-use \PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Storing information from the request and calculating related essentials.
@@ -21,7 +21,7 @@ class RequestTest extends TestCase
      *
      * @return void
      */
-    public function setUp()
+    public function setUp() : void
     {
         $this->request = new Request();
         $this->request->setGlobals(
@@ -36,26 +36,6 @@ class RequestTest extends TestCase
                 ]
             ]
         );
-    }
-
-
-
-    /**
-     * Test
-     *
-     * @return void
-     *
-     */
-    public function testGet()
-    {
-        $get = $this->request->getGet("nothing");
-        $this->assertEmpty($get, "Nothing is NOT empty.");
-
-        $key = "somekey";
-        $value = "somevalue";
-        $this->request->setGet($key, $value);
-        $get = $this->request->getGet($key);
-        $this->assertEquals($get, $value, "Missmatch between " . $get . " and " . $value);
     }
 
 
@@ -423,8 +403,6 @@ class RequestTest extends TestCase
 
         $this->assertEquals($siteUrl, $this->request->getSiteUrl(), "Failed siteurl: " . $siteUrl);
         $this->assertEquals($baseUrl, $this->request->getBaseUrl(), "Failed baseurl: " . $baseUrl);
-
-        echo $this->request->getMethod();
     }
 
 
