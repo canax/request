@@ -32,6 +32,13 @@ function getPost($key, $default = null)
 
 
 
+v2.0.3 (2020-04-22)
+---------------------------------
+
+* Fix error in Request::init() on PHP 7.4 when parse_url() returns false due to malformed url (on cli).
+
+
+
 v2.0.2 (2019-11-07)
 ---------------------------------
 

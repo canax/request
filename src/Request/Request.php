@@ -125,6 +125,13 @@ class Request
         // Prepare to create siteUrl and baseUrl by using currentUrl
         $this->currentUrl = $this->getCurrentUrl();
         $parts = parse_url($this->currentUrl);
+        if ($parts === false) {
+            $this->siteUrl = null;
+            $this->baseUrl = null;
+            return $this;
+        }
+
+        // Build the url from its parts
         $this->siteUrl = "{$parts["scheme"]}://{$parts["host"]}"
             . (isset($parts["port"])
                 ? ":{$parts["port"]}"
