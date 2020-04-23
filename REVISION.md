@@ -32,6 +32,13 @@ function getPost($key, $default = null)
 
 
 
+v2.0.4 (2020-04-23)
+---------------------------------
+
+* Align Makefile with anax/commons.
+
+
+
 v2.0.3 (2020-04-22)
 ---------------------------------
 
