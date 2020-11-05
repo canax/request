@@ -32,6 +32,21 @@ function getPost($key, $default = null)
 
 
 
+v2.0.6 (2020-11-05)
+---------------------------------
+
+* Update to PHP 7.4 on Travis.
+
+
+
+v2.0.5 (2020-11-05)
+---------------------------------
+
+* Enhance getBodyAsJson to allow for empty body to be returned as null.
+* Enhance unit testing.
+
+
+
 v2.0.4 (2020-04-23)
 ---------------------------------
 
