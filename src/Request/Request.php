@@ -466,18 +466,20 @@ class Request
 
     /**
      * Get the request body from the HTTP request and treat it as
-     * JSON data.
+     * JSON data, return null if request body is empty.
      *
-     * @throws Anax\Request\Exception when request body is invalid JSON.
+     * @throws \JsonException when request body is invalid JSON.
      *
-     * @return mixed as the JSON converted content.
+     * @return mixed as the JSON converted content or null if body is empty.
      */
     public function getBodyAsJson()
     {
-        $entry = json_decode($this->getBody(), true);
-        if (is_null($entry)) {
-            throw new Exception("Could not read HTTP request body as JSON.");
+        $body = $this->getBody();
+        if ($body == "") {
+            return null;
         }
+
+        $entry = json_decode($body, true, 512, JSON_THROW_ON_ERROR);
         return $entry;
     }
 }
