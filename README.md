@@ -258,6 +258,9 @@ You can get and set the value in the HTTP request body. Sometimes the HTTP reque
 # Read the body
 $request->getBody();
 
+# Read the body and treat it as json
+$request->getBodyAsJson()
+
 # Set the body
 $request->setBody($content);
 ```
@@ -275,5 +278,5 @@ This software carries a MIT license. See [LICENSE.txt](LICENSE.txt) for details.
 
 ```
  .  
-..:  Copyright (c) 2013 - 2019 Mikael Roos, mos@dbwebb.se
+..:  Copyright (c) 2013 - 2020 Mikael Roos, mos@dbwebb.se
 ```
