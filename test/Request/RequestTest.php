@@ -6,6 +6,8 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * Storing information from the request and calculating related essentials.
+ *
+ * @SuppressWarnings(PHPMD.TooManyPublicMethods)
  */
 class RequestTest extends TestCase
 {
@@ -408,11 +410,110 @@ class RequestTest extends TestCase
 
 
     /**
-     * Test
+     * Check that the HTTP method can be retrieved.
      */
     public function testRequestMethod()
     {
-        $this->request->setServer("REQUEST_METHOD", "GET");
-        $this->assertEquals("GET", $this->request->getMethod());
+        // Initial value
+        $exp = null;
+        $res = $this->request->getScriptName();
+        $this->assertEquals($exp, $res);
+
+        // Set and get the method
+        $exp = "GET";
+        $this->request->setServer("REQUEST_METHOD", $exp);
+        $res = $this->request->getMethod();
+        $this->assertEquals($exp, $res);
+    }
+
+
+
+    /**
+     * Check that the script name can be retrieved.
+     */
+    public function testGetScriptName()
+    {
+        // Initial value
+        $exp = null;
+        $res = $this->request->getScriptName();
+        $this->assertEquals($exp, $res);
+
+        // Set and get the name
+        $res = "index.php";
+        $this->request->setServer("SCRIPT_NAME", $exp);
+        $res = $this->request->getScriptName();
+        $this->assertEquals($exp, $res);
+    }
+
+
+
+    /**
+     * Check that the route parts can be retrieved.
+     */
+    public function testGetRouteParts()
+    {
+        // Initial value
+        $exp = null;
+        $res = $this->request->getRouteParts();
+        $this->assertEquals($exp, $res);
+
+        // Test the empty route
+        $this->request->setServer("REQUEST_URI", "");
+        $this->request->init();
+        $exp = [""];
+        $res = $this->request->getRouteParts();
+        $this->assertEquals($exp, $res);
+
+        // Test another route
+        $this->request->setServer("REQUEST_URI", "some/route");
+        $this->request->init();
+        $exp = ["some", "route"];
+        $res = $this->request->getRouteParts();
+        $this->assertEquals($exp, $res);
+
+        // Test route with querystring
+        $this->request->setServer("REQUEST_URI", "some/route?arg=1&arg2");
+        $this->request->init();
+        $exp = ["some", "route"];
+        $res = $this->request->getRouteParts();
+        $this->assertEquals($exp, $res);
+    }
+
+
+
+    /**
+     * Check that the body can be set/get.
+     */
+    public function testSetAndGetBody()
+    {
+        // Initial value
+        $exp = null;
+        $res = $this->request->getBody();
+        $this->assertEquals($exp, $res);
+
+        // Set and get body
+        $exp = "body";
+        $this->request->setBody($exp);
+        $res = $this->request->getBody();
+        $this->assertEquals($exp, $res);
+    }
+
+
+
+    /**
+     * Get the body as JSON.
+     */
+    public function testGetBodyAsJson()
+    {
+        // Initial value
+        $exp = null;
+        $res = $this->request->getBodyAsJson();
+        $this->assertEquals($exp, $res);
+
+        // Set and get body
+        $exp = "[1]";
+        $this->request->setBody($exp);
+        $res = $this->request->getBodyAsJson();
+        $this->assertEquals(json_decode($exp), $res);
     }
 }

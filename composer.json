@@ -1,5 +1,5 @@
 {
-    "name": "anax/request",    
+    "name": "anax/request",
     "type": "library",
     "description": "Anax Request module, details on the request.",
     "keywords": ["boilerplate", "framework", "mvc", "micro", "education"],
@@ -15,7 +15,7 @@
         "issues": "https://github.com/canax/request/issues"
     },
     "autoload": {
-        "psr-4": { 
+        "psr-4": {
             "Anax\\": "src/"
         }
     },
@@ -23,6 +23,7 @@
         "php": "^7.2"
     },
     "require-dev": {
+        "anax/di": "^2.0.4",
         "phpunit/phpunit": "^8"
     }
 }
