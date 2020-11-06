@@ -32,6 +32,13 @@ function getPost($key, $default = null)
 
 
 
+v2.0.7 (2020-11-05)
+---------------------------------
+
+* Add tests for getBaseUrl and getSiteUrl.
+
+
+
 v2.0.6 (2020-11-05)
 ---------------------------------
 

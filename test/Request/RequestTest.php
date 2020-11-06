@@ -383,8 +383,6 @@ class RequestTest extends TestCase
      *
      * @param string $server the route part
      *
-     * @return void
-     *
      * @dataProvider providerInit
      *
      */
@@ -423,6 +421,98 @@ class RequestTest extends TestCase
         $exp = "GET";
         $this->request->setServer("REQUEST_METHOD", $exp);
         $res = $this->request->getMethod();
+        $this->assertEquals($exp, $res);
+    }
+
+
+
+    /**
+     * Provider for $_SERVER to get siteurl and baseurl.
+     */
+    public function providerSiteBaseUrl()
+    {
+        return [
+            [
+                [
+                    'REQUEST_SCHEME' => "http",
+                    'HTTPS'       => null, //"on",
+                    'SERVER_NAME' => "dbwebb.se",
+                    'SERVER_PORT' => "80",
+                    'REQUEST_URI' => "/install_dir/htdocs/index.php",
+                    'SCRIPT_NAME' => "/install_dir/htdocs/index.php",
+                    'siteUrl'     => "http://dbwebb.se",
+                    'baseUrl'     => "http://dbwebb.se/install_dir/htdocs",
+                ]
+            ],
+            [
+                [
+                    'REQUEST_SCHEME' => "http",
+                    'HTTPS'       => null, //"on",
+                    'SERVER_NAME' => "dbwebb.se",
+                    'SERVER_PORT' => "80",
+                    'REQUEST_URI' => "/index.php",
+                    'SCRIPT_NAME' => "/index.php",
+                    'siteUrl'     => "http://dbwebb.se",
+                    'baseUrl'     => "http://dbwebb.se",
+                ]
+            ],
+        ];
+    }
+
+
+
+    /**
+     * Check that the baseurl is created.
+     * @dataProvider providerInit
+     */
+    public function testGetBaseUrls($server)
+    {
+        $this->request->setServer('REQUEST_SCHEME', $server['REQUEST_SCHEME']);
+        $this->request->setServer('HTTPS', $server['HTTPS']);
+        $this->request->setServer('SERVER_NAME', $server['SERVER_NAME']);
+        $this->request->setServer('SERVER_PORT', $server['SERVER_PORT']);
+        $this->request->setServer('REQUEST_URI', $server['REQUEST_URI']);
+        $this->request->setServer('SCRIPT_NAME', $server['SCRIPT_NAME']);
+
+        $baseUrl = $server['baseUrl'];
+
+        $res = $this->request->init();
+
+        $exp = $server['siteUrl'];
+        $res = $this->request->getSiteUrl();
+        $this->assertEquals($exp, $res);
+
+        $exp = $server['baseUrl'];
+        $res = $this->request->getBaseUrl();
+        $this->assertEquals($exp, $res);
+    }
+
+
+
+    /**
+     * Check that the siteurl and baseurl is created.
+     */
+    public function testEmptyGetSiteBaseUrl()
+    {
+        $request = new Request();
+
+        // Initial value
+        $exp = null;
+        $res = $request->getBaseUrl();
+        $this->assertEquals($exp, $res);
+
+        $exp = null;
+        $res = $request->getSiteUrl();
+        $this->assertEquals($exp, $res);
+
+        // Value after empty init
+        $request->init();
+        $exp = null;
+        $res = $request->getBaseUrl();
+        $this->assertEquals($exp, $res);
+
+        $exp = null;
+        $res = $request->getSiteUrl();
         $this->assertEquals($exp, $res);
     }
 
